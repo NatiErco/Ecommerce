@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="carrito.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="carrito.css">
+    <link rel="stylesheet" href="navbar.css">
+    <title>YourCard</title>
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="navbarItems" id="navbarItems">
+            <script src="navbar.js"></script>
+        </div>
+    </header>
+    <div class="Carts">
+        <h1>Your Cart</h1>
+        <div>
+            <table class="tablaCartas">
+                <thead>
+                    <tr class="encabezado">
+                        <th class="tableHead">PRODUCT</th>
+                        <th class="tableHead">QUANTITY</th>
+                        <th class="tableHead">PRICE</th>
+                        <th class="tableHead">REMOVE</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCarrito">
+                <script>
+function comprar() {
+    const datosCard = localStorage.getItem("totalProduct");
+    console.log(datosCard);
+    const datosCardJson = JSON.parse(datosCard);
+  return datosCardJson;
+}
+function cargarDatos() {
+   let datos = comprar();
+    datos.forEach(element => {
+        //
+    
+    let existingRow = document.querySelector(`tr[data-id="${element.id}"][data-size="${element.size}"]`);
+
+if (existingRow) {
+    let cantidadInput = existingRow.querySelector(".cantidad");
+    cantidadInput.value = parseInt(cantidadInput.value) + parseInt(element.quantity);
+} else {
+    //
+    let imagenPrincipal = element.src;
+    let titulo = document.createElement("p");
+    
+    
+    titulo.textContent = element.title + ", " + element.size;
+    let tbody = document.getElementById("tablaCarrito");
+    let tablaTd1 = document.createElement("td");
+    let imagen = document.createElement("img");
+    const fila = document.createElement("tr");
+    fila.setAttribute("data-id", element.id);
+    fila.setAttribute("data-size", element.size);
+
+    imagen.src = imagenPrincipal;
+    tablaTd1.appendChild(imagen);
+    tablaTd1.appendChild(titulo);
+    fila.appendChild(tablaTd1);
+    tbody.appendChild(fila);
+
+    const tablaTd2 = document.createElement("td");
+    let cantidad = document.createElement("input");
+    cantidad.type = "number";
+    cantidad.min = 1;
+    cantidad.max = 100;
+    //
+    cantidad.classList = "cantidad";
+    //
+    cantidad.value = element.quantity;
+    tablaTd2.appendChild(cantidad);
+    fila.appendChild(tablaTd2);
+     //
+     cantidad.onchange = () => {
+                actualizarCantidadEnLocalStorage(element.id, cantidad.value);
+                subtotal();
+            };
+    //
+    let tablaTd3 = document.createElement("td");
+    let precio = document.createElement("p");
+    precio.textContent = element.price;
+    tablaTd3.appendChild(precio);
+    fila.appendChild(tablaTd3);
+
+    const tablaTd4 = document.createElement("td");
+    const imagenBorrar = document.createElement("img");
+    imagenBorrar.id = 'tamañoCss'
+    imagenBorrar.src = "media/cruz.png";
+    
+    imagenBorrar.addEventListener("click", () => {
+        burbuja();    
+        borrar(element.id);
+            tbody.removeChild(fila);
+            subtotal();
+        });
+tablaTd4.appendChild(imagenBorrar);
+    fila.appendChild(tablaTd4);
+
+    tbody.appendChild(fila);
+    
+    
+    //
+    subtotal();
+    //
+    }
+    
+    
+});
+//
+    subtotal();
+//
+    
+}
+function borrar(id) {
+    
+    let datosCard = localStorage.getItem("totalProduct");
+    let datosCardJson = JSON.parse(datosCard);
+    console.log("entra");
+    let idProduct = id;
+    datosCardJson = datosCardJson.filter(producto => producto.id !== idProduct);
+     localStorage.setItem("totalProduct", JSON.stringify(datosCardJson));
+ }
+ //
+ function actualizarCantidadEnLocalStorage(id, cantidad) {
+    let datos = JSON.parse(localStorage.getItem("totalProduct")) || [];
+    datos = datos.map(element => {
+        if (element.id === id) {
+            element.quantity = cantidad;
+        }
+        return element;
+    });
+    localStorage.setItem("totalProduct", JSON.stringify(datos));
+}
+ 
+ function subtotal(cantidad) {
+    let tbody = document.getElementById("tablaCarrito");
+    let filaFinal = document.getElementById("subtotal");
+
+    if (filaFinal) {
+        tbody.removeChild(filaFinal);
+    }
+        let datos = comprar();
+        let multiplicacion = 0;
+        datos.forEach(element => {
+            if (cantidad) {
+                element.quantity = cantidad;
+                multiplicacion += Number(element.price)* Number(element.quantity);
+            } else {
+            multiplicacion += Number(element.price)* Number(element.quantity);
+            }
+        });
+         filaFinal = document.createElement("tr");
+        filaFinal.id = "subtotal";
+       
+        let filaFinalTd1 = document.createElement("td");
+        filaFinal.appendChild(filaFinalTd1);
+        tbody.appendChild(filaFinal)
+    
+        let subtotal = document.createElement("p");
+        subtotal.textContent = "SUBTOTAL";
+        let filaFinalTd2 = document.createElement("td");
+        filaFinalTd2.appendChild(subtotal);
+        filaFinal.appendChild(filaFinalTd2);
+
+        let filaFinalTd3 = document.createElement("td");
+        let precioFinal = document.createElement("p")
+        precioFinal.textContent = multiplicacion.toFixed(2)
+        filaFinalTd3.appendChild(precioFinal);
+        filaFinal.appendChild(filaFinalTd3);
+        
+        let filaFinalTd4 = document.createElement("td");
+        filaFinal.appendChild(filaFinalTd4);
+        if (precioFinal.textContent == 0) {
+        tbody.removeChild(filaFinal);
+    }
+ }
+//
+document.addEventListener("DOMContentLoaded", function() {
+    cargarDatos();
+});
+</script>
+                </tbody>
+            </table>
+    </div>
+    <div class="enlaces">
+        <a class="enlaceCheckout" href="gracias.html">Check Out<img src="media/hacia-adelante.png"></a>
+        <a class="enlaceProducts" href="index.html"><img src="media/atras.png">Back To All Products</a>
+    </div>
+    </div>
+    <footer>
+        
+    </footer>
+</body>

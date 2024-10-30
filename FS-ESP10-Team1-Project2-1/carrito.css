@@ -1,0 +1,97 @@
+.Carts {
+    padding-top: 7vh;
+    padding-bottom: 40vh;
+    text-align: center;
+    font-family: 'Josefin sans';
+}
+.Carts h1 {
+    color: blueviolet;
+    font-size: 40px;
+}
+.tablaCartas {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    min-height: 40vh;
+}
+.tableHead {
+    color: rgba(144, 0, 246, 0.311);
+    padding: 1vw;
+    border-bottom: 1px solid rgba(144, 0, 246, 0.311);
+}
+.enlaces {
+    display: flex;
+    flex-direction: column;
+}
+.enlaces .enlaceCheckout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin-left: 38vw;
+    text-decoration: none;
+    border: 1px solid rgba(91, 33, 182);
+    border-radius: .125rem;
+    width: 20vw;
+    height: 4.2vh;
+    background-color: rgba(91, 33, 182);
+    color: white;
+    
+}
+
+#graciasText{
+    font-family: 'Josefin Sans';
+    align-items: center;
+    margin-left: 35%;
+    margin-top: 15%;
+}
+.enlaces .enlaceProducts {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: rgba(91, 33, 182);
+    font-size: 20px;
+    margin-top: 2vh;
+    margin-left: 38vw;
+    text-decoration: none;
+    border: 1px solid rgba(91, 33, 182);
+    border-radius: .125rem;
+    width: 20vw;
+    height: 4.2vh;
+    align-items: center;
+
+}
+.enlaces .enlaceCheckout img {
+    width: 1.2vw;
+    height: 2.5vh;
+}
+.enlaces .enlaceProducts img {
+    width: 1.2vw;
+    height: 2.5vh;
+}
+footer .footerTexto img {
+    width: 1.2vw;
+    height: 2.5vh;
+}
+footer .footerTexto a {
+    text-decoration: none;
+    color: rgba(91, 33, 182);
+}
+footer .footerTexto {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+tbody img {
+    width: 90px;
+   
+}
+
+.enlaces .enlaceProducts:hover {
+    background-color: rgb(233, 233, 241); /* Color de fondo al hacer hover */
+}
+
+.enlaces .enlaceCheckout {
+    background-color: rgba(91, 33, 182);
+}
